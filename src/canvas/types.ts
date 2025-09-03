@@ -1,7 +1,1 @@
-export interface CanvasItem {
-  id: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
+export interface CanvasItem { id: string; x: number; y: number; width: number; height: number; }
