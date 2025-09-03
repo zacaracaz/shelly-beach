@@ -35,10 +35,8 @@ export const Canvas: React.FC = () => {
   }, []);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    // Only start if target is the canvas surface, not an existing item
     const target = e.target as HTMLElement;
     if (target.dataset.item) return; // clicked on existing block
-
     const pos = pointerPositionRelative(e.clientX, e.clientY);
     setDraft({ start: pos, current: pos });
     setIsPointerDown(true);
@@ -53,7 +51,6 @@ export const Canvas: React.FC = () => {
   const commitDraft = useCallback(() => {
     if (!draft) return;
     const { left, top, width, height } = normalize(draft.start, draft.current);
-    // Minimum size guard
     if (width < 8 || height < 8) {
       setDraft(null);
       return;
@@ -79,7 +76,6 @@ export const Canvas: React.FC = () => {
   }, [cancelDraft]);
 
   const handlePointerLeave = useCallback(() => {
-    // If pointer leaves while drawing, cancel
     if (isPointerDown) {
       cancelDraft();
     }
@@ -98,7 +94,6 @@ export const Canvas: React.FC = () => {
 
   return (
     <div className="space-y-2" onKeyDown={handleKeyDown}>
-      <h2 className="font-semibold text-slate-800">Canvas (Drag on empty space to create blocks)</h2>
       <div
         ref={containerRef}
         className="relative w-full h-[480px] bg-slate-50 border border-slate-200 rounded-md overflow-hidden select-none"
